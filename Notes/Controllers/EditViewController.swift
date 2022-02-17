@@ -8,14 +8,20 @@
 import UIKit
 import CoreData
 
+protocol AddNoteDelegate {
+    func appendNote(note: Note)
+}
 class EditViewController: UIViewController {
 
     @IBOutlet weak var notesTitle: UITextField!
     @IBOutlet weak var notesDescription: UITextView!
     
+    var selectedNote = Note()
     var notesArray = [Note?]()
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
+    var delegate: AddNoteDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,22 +35,15 @@ class EditViewController: UIViewController {
         newNote.noteId = UUID()
         newNote.noteTimeStamp = Date()
         
-        notesArray.append(newNote)
-        saveItems()
+        delegate?.appendNote(note: newNote)
+        
+        dismiss(animated: true, completion: nil)
         
     }
     @IBAction func deleteNote(_ sender: UIBarButtonItem) {
     }
     
-    // MARK: - Saving & Loading Data
-    
-    func saveItems(){
-        do {
-            try context.save( )
-        } catch {
-            print("Error saving context \(error)")
-        }
-    }
+
     
 
 }

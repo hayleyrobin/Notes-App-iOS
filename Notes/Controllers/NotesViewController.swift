@@ -6,20 +6,33 @@
 //
 
 import UIKit
+import CoreData
 
-class NotesViewController: UITableViewController {
+class NotesViewController: UITableViewController, AddNoteDelegate {
+    func appendNote(note: Note) {
+        notesArray.append(note)
+        saveItems()
+    }
 
     var notesArray = [Note]()
+    
+    var noteObject = EditViewController()
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
+        
+        noteObject.delegate = self
+        
+        loadItems()
+        
+//        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
 
     }
     @IBAction func addNotePressed(_ sender: UIBarButtonItem) {
-        
+        let destinationVC = EditViewController()
+        self.present(destinationVC, animated: true, completion: nil)
     }
     
     // MARK: - Table view data source
@@ -45,12 +58,31 @@ class NotesViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationVC = segue.destination as! EditViewController
         
-        destinationVC.notesArray = notesArray
-//        if let indexPath = tableView.indexPathForSelectedRow{
-//            destinationVC.selectedNote = notesArray[indexPath.row]
-//        }
+//        destinationVC.notesArray = notesArray
+        if let indexPath = tableView.indexPathForSelectedRow{
+            destinationVC.selectedNote = notesArray[indexPath.row]
+        }
     }
 
+    // MARK: - Saving & Loading Data
+    
+    func saveItems(){
+        do {
+            try context.save( )
+        } catch {
+            print("Error saving context \(error)")
+        }
+    }
+    
+    func loadItems(){
+        let request: NSFetchRequest<Note> = Note.fetchRequest()
+        do{
+            notesArray = try context.fetch(request)
+        }catch {
+            print("Error loading context, \(error)")
+        }
+        tableView.reloadData()
+    }
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
