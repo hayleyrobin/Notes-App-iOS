@@ -24,6 +24,9 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="BYZ-38-t0r" kind="show" identifier="EditNote" id="xqe-Tx-BMv"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -82,14 +85,11 @@
                         <rightBarButtonItems>
                             <barButtonItem title="Save" id="c5v-QE-wEr">
                                 <connections>
-                                    <action selector="saveNote:" destination="BYZ-38-t0r" id="B5O-Su-b1c"/>
+                                    <action selector="savePressed:" destination="BYZ-38-t0r" id="TYk-bQ-SBc"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem title="Delete" id="5y5-Cs-D6L">
                                 <color key="tintColor" systemColor="systemRedColor"/>
-                                <connections>
-                                    <action selector="deleteNote:" destination="BYZ-38-t0r" id="qS2-1F-YB5"/>
-                                </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
@@ -121,6 +121,9 @@
             <point key="canvasLocation" x="391" y="-563"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="xqe-Tx-BMv"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
