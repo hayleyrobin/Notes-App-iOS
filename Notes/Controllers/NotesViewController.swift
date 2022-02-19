@@ -17,13 +17,12 @@ class NotesViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadItems()
+        loadNotes()
         
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
 
     }
     override func viewDidAppear(_ animated: Bool) {
-//        loadItems()
         tableView.reloadData()
     }
     
@@ -52,19 +51,20 @@ class NotesViewController: UITableViewController {
     
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destinationVC = segue.destination as! EditViewController
-        
-//        destinationVC.notesArray = notesArray
+
         if segue.identifier == "EditNote"{
+            let destinationVC = segue.destination as! EditViewController
             if let indexPath = tableView.indexPathForSelectedRow{
                 destinationVC.selectedNote = notesArray[indexPath.row]
+                
+                tableView.deselectRow(at: indexPath, animated: true)
             }
         }
     }
 
     // MARK: - Saving & Loading Data
     
-    func loadItems(){
+    func loadNotes(){
         let request: NSFetchRequest<Note> = Note.fetchRequest()
         do{
             notesArray = try context.fetch(request)

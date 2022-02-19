@@ -24,9 +24,6 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="BYZ-38-t0r" kind="show" identifier="EditNote" id="xqe-Tx-BMv"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -42,6 +39,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="EditNote" id="ARC-nq-ExG"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B4L-w9-IDW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -122,7 +122,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="xqe-Tx-BMv"/>
+        <segue reference="ARC-nq-ExG"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="labelColor">

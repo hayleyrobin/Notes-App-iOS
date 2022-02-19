@@ -13,27 +13,37 @@ class EditViewController: UIViewController {
     @IBOutlet weak var notesTitle: UITextField!
     @IBOutlet weak var notesDescription: UITextView!
     
-    var selectedNote = Note()
+    var selectedNote: Note? = nil
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        if(selectedNote != nil){
+            notesTitle.text = selectedNote?.noteTitle
+            notesDescription.text = selectedNote?.noteText
+        }
     }
     
     @IBAction func savePressed(_ sender: Any) {
-        let newNote = Note(context: context)
-        newNote.noteTitle = notesTitle.text!
-        newNote.noteText = notesDescription.text!
-        newNote.noteId = UUID()
-        newNote.noteTimeStamp = Date()
-        
-        notesArray.append(newNote)
+        if(selectedNote == nil){
+            let newNote = Note(context: context)
+            newNote.noteTitle = notesTitle.text!
+            newNote.noteText = notesDescription.text!
+            newNote.noteId = UUID()
+            newNote.noteTimeStamp = Date()
+            
+            notesArray.append(newNote)
 
-        saveItems()
-        navigationController?.popViewController(animated: true)
+            saveNote()
+            navigationController?.popViewController(animated: true)
+        }
+        else{
+            editNote()
+            navigationController?.popViewController(animated: true)
+        }
+
 
     }
     @IBAction func deleteNote(_ sender: UIBarButtonItem) {
@@ -41,14 +51,28 @@ class EditViewController: UIViewController {
     
     // MARK: - Saving & Loading Data
     
-    func saveItems(){
+    func saveNote(){
         do {
             try context.save()
         } catch {
             print("Error saving context \(error)")
         }
     }
-    
+    func editNote(){
+        let request: NSFetchRequest<Note> = Note.fetchRequest()
+        do{
+            let results = try context.fetch(request)
+            for note in results {
+                if(note == selectedNote){
+                    note.noteTitle = notesTitle.text!
+                    note.noteText = notesDescription.text!
+                    try context.save()
+                }
+            }
+        } catch{
+            print("Error editing context \(error)")
+        }
+    }
     
 
 }
