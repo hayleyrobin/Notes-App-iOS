@@ -8,20 +8,15 @@
 import UIKit
 import CoreData
 
-protocol AddNoteDelegate: class {
-    func appendNote(note: Note)
-}
 class EditViewController: UIViewController {
 
     @IBOutlet weak var notesTitle: UITextField!
     @IBOutlet weak var notesDescription: UITextView!
     
     var selectedNote = Note()
-    var notesArray = [Note?]()
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
-    weak var delegate: AddNoteDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +31,7 @@ class EditViewController: UIViewController {
         newNote.noteTimeStamp = Date()
         
         notesArray.append(newNote)
-//        delegate?.appendNote(note: newNote)
+
         saveItems()
         navigationController?.popViewController(animated: true)
 
@@ -49,7 +44,6 @@ class EditViewController: UIViewController {
     func saveItems(){
         do {
             try context.save()
-            print("yes")
         } catch {
             print("Error saving context \(error)")
         }

@@ -23,7 +23,7 @@ class NotesViewController: UITableViewController {
 
     }
     override func viewDidAppear(_ animated: Bool) {
-        loadItems()
+//        loadItems()
         tableView.reloadData()
     }
     
