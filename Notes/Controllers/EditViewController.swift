@@ -14,6 +14,7 @@ class EditViewController: UIViewController {
     @IBOutlet weak var notesDescription: UITextView!
     
     var selectedNote: Note? = nil
+    var selectedIndex: Int? = nil
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
@@ -47,6 +48,21 @@ class EditViewController: UIViewController {
 
     }
     @IBAction func deleteNote(_ sender: UIBarButtonItem) {
+        let request: NSFetchRequest<Note> = Note.fetchRequest()
+        do {
+            let results = try context.fetch(request)
+            for note in results {
+                if(note == selectedNote){
+                    context.delete(notesArray[selectedIndex!])
+                    notesArray.remove(at: selectedIndex!)
+                    try context.save()
+                }
+            }
+        } catch {
+            print("Error saving context \(error)")
+        }
+
+        navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Saving & Loading Data

@@ -56,6 +56,7 @@ class NotesViewController: UITableViewController {
             let destinationVC = segue.destination as! EditViewController
             if let indexPath = tableView.indexPathForSelectedRow{
                 destinationVC.selectedNote = notesArray[indexPath.row]
+                destinationVC.selectedIndex = indexPath.row
                 
                 tableView.deselectRow(at: indexPath, animated: true)
             }

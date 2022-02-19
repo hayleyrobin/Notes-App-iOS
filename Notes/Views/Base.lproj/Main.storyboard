@@ -90,6 +90,9 @@
                             </barButtonItem>
                             <barButtonItem title="Delete" id="5y5-Cs-D6L">
                                 <color key="tintColor" systemColor="systemRedColor"/>
+                                <connections>
+                                    <action selector="deleteNote:" destination="BYZ-38-t0r" id="TcG-Di-K5D"/>
+                                </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
