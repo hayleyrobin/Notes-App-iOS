@@ -59,7 +59,7 @@ class EditViewController: UIViewController {
                 }
             }
         } catch {
-            print("Error saving context \(error)")
+            print("Error deleting context, \(error)")
         }
 
         navigationController?.popViewController(animated: true)
@@ -71,7 +71,7 @@ class EditViewController: UIViewController {
         do {
             try context.save()
         } catch {
-            print("Error saving context \(error)")
+            print("Error saving context, \(error)")
         }
     }
     func editNote(){
@@ -86,7 +86,7 @@ class EditViewController: UIViewController {
                 }
             }
         } catch{
-            print("Error editing context \(error)")
+            print("Error editing context, \(error)")
         }
     }
     
